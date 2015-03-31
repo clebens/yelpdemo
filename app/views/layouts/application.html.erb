@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Yelpdemo</title>
+  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
   <%= render 'layouts/bootstrap' %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -10,12 +11,18 @@
 <body>
 <%= render 'layouts/navbar' %>
 <div class="container-fluid">
-       <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
-</div>
+  <% flash.each do |name, msg| %>
+    <% if msg.is_a?(String) %>
+      <div class="alert alert-<%= name == "notice" ? "success" : "danger" %> alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      </div>
+    <% end %>
+  <% end %>
+
 <%= yield %>
+</div>
 <%= render 'layouts/footer' %>
 
-<%= image_tag "https://s3-us-west-2.amazonaws.com/clebens-yelpdemo/happy_footer.png" %>
 </body>
 </html>
