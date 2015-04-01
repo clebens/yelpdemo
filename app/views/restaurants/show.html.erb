@@ -1,25 +1,51 @@
 
-<%= image_tag @restaurant.image_url %>
+<div class="row">
 
-<p>
-  <strong>Name:</strong>
-  <%= @restaurant.name %>
-</p>
+  <div class="col-xs-5">
+    <%= image_tag @restaurant.image_url %>
 
-<p>
-  <strong>Address:</strong>
-  <%= @restaurant.address %>
-</p>
+    <p>
+      <strong>Address:</strong>
+      <%= @restaurant.address %>
+    </p>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @restaurant.phone %>
-</p>
+    <p>
+      <strong>Phone:</strong>
+      <%= @restaurant.phone %>
+    </p>
 
-<p>
-  <strong>Website:</strong>
-  <%= @restaurant.website %>
-</p>
+    <p>
+      <strong>Website:</strong>
+      <%= @restaurant.website %>
+    </p>
 
-<%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-link" %> |
-<%= link_to 'Back', restaurants_path, class: "btn btn-link" %>
+    <%= link_to "Write Review", new_restaurant_review_path(@restaurant), class: "btn btn-primary" %>
+
+
+    <%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-link" %> |
+    <%= link_to 'Back', restaurants_path, class: "btn btn-link" %>
+  </div>
+
+  <div class="col-xs-7">
+    <%= render 'restaurants/titlebar' %>
+    <hr />
+    <% @reviews.each do |review| %>
+      <div class="star-rating" data-starsize="12" data-score=<%= review.rating %>></div> - <%= User.find(review.user_id).username %>
+      <p><%= review.comment %></p>
+    <% end %>
+  </div>
+  <script>
+    $(document).ready(function() {
+      $('.star-rating').each(function() {
+        $(this).raty({
+          path: 'https://clebens-yelpdemo.s3.amazonaws.com/stars',
+          readOnly: true,
+          starSize: $(this).attr('data-starsize') ,
+          score: function() {
+            return $(this).attr('data-score');
+          }
+        });
+      });
+    }); 
+  </script>
+</div> 

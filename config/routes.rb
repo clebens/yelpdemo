@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  resources :restaurants do
+    resources :reviews, except: [:show, :index]
+  end
+
   devise_for :users do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
 
-  resources :restaurants
   get 'pages/about'
 
   get 'pages/contact'

@@ -26,7 +26,10 @@ gem 'fog'
 gem 'figaro'
 gem 'mini_magick'
 gem 'devise'
-
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
+gem 'pry'
 group :development, :test do
     gem 'sqlite3'
     gem 'byebug'
